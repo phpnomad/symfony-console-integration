@@ -9,12 +9,9 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class ConsoleOutputStrategy implements OutputStrategy
 {
-    protected OutputInterface $output;
 
-    public function __construct(OutputInterface $output)
+    public function __construct(protected OutputInterface $output)
     {
-        $this->output = $output;
-
         // Optional: Add custom styles for info/success/warning if desired
         $formatter = $this->output->getFormatter();
 

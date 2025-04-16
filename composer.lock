@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5f2e0bfd12b64a9496e8e9f90f31ca4",
+    "content-hash": "0b4c9ea73461fab09d0571d55d31c7a0",
     "packages": [
         {
             "name": "phpnomad/console",
@@ -45,6 +45,178 @@
                 "source": "https://github.com/phpnomad/console/tree/1.0.0"
             },
             "time": "2025-04-14T22:40:34+00:00"
+        },
+        {
+            "name": "phpnomad/di",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnomad/di.git",
+                "reference": "e1719564d580062ae5369b364ab1c8fd3acb2e53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnomad/di/zipball/e1719564d580062ae5369b364ab1c8fd3acb2e53",
+                "reference": "e1719564d580062ae5369b364ab1c8fd3acb2e53",
+                "shasum": ""
+            },
+            "require": {
+                "phpnomad/utils": "^1.0"
+            },
+            "require-dev": {
+                "phpnomad/tests": "^0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPNomad\\Di\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Standiford",
+                    "email": "alex@standiford.us"
+                }
+            ],
+            "homepage": "https://github.com/phpnomad/core",
+            "support": {
+                "issues": "https://github.com/phpnomad/di/issues",
+                "source": "https://github.com/phpnomad/di/tree/1.0.0"
+            },
+            "time": "2024-12-18T17:09:23+00:00"
+        },
+        {
+            "name": "phpnomad/event",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnomad/event.git",
+                "reference": "c2f8f4c19bfd017086dbffb0510e20b06d7fa533"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnomad/event/zipball/c2f8f4c19bfd017086dbffb0510e20b06d7fa533",
+                "reference": "c2f8f4c19bfd017086dbffb0510e20b06d7fa533",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpnomad/tests": "^0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPNomad\\Events\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Standiford",
+                    "email": "alex@standiford.us"
+                }
+            ],
+            "homepage": "https://github.com/phpnomad/core",
+            "support": {
+                "issues": "https://github.com/phpnomad/event/issues",
+                "source": "https://github.com/phpnomad/event/tree/1.0.0"
+            },
+            "time": "2024-12-18T17:10:47+00:00"
+        },
+        {
+            "name": "phpnomad/facade",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnomad/facade.git",
+                "reference": "225c9a743d7f57410a78d8923a086bda1b6aa2fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnomad/facade/zipball/225c9a743d7f57410a78d8923a086bda1b6aa2fa",
+                "reference": "225c9a743d7f57410a78d8923a086bda1b6aa2fa",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpnomad/di": "^1.0",
+                "phpnomad/logger": "^1.0",
+                "phpnomad/tests": "^0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPNomad\\Facade\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Standiford",
+                    "email": "alex@standiford.us"
+                }
+            ],
+            "homepage": "https://github.com/phpnomad/core",
+            "support": {
+                "issues": "https://github.com/phpnomad/facade/issues",
+                "source": "https://github.com/phpnomad/facade/tree/1.0.0"
+            },
+            "time": "2024-12-18T17:11:21+00:00"
+        },
+        {
+            "name": "phpnomad/loader",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnomad/loader.git",
+                "reference": "a0f9e15cddfa9671fc1ee6ff58c06c04f6634d65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnomad/loader/zipball/a0f9e15cddfa9671fc1ee6ff58c06c04f6634d65",
+                "reference": "a0f9e15cddfa9671fc1ee6ff58c06c04f6634d65",
+                "shasum": ""
+            },
+            "require": {
+                "phpnomad/di": "^1.0",
+                "phpnomad/facade": "^1.0",
+                "phpnomad/mutator": "^1.0",
+                "phpnomad/update": "^1.0",
+                "phpnomad/utils": "^1.0"
+            },
+            "require-dev": {
+                "phpnomad/tests": "^0.1.0 || ^0.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPNomad\\Loader\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Standiford",
+                    "email": "alex@standiford.us"
+                }
+            ],
+            "homepage": "https://github.com/phpnomad/core",
+            "support": {
+                "issues": "https://github.com/phpnomad/loader/issues",
+                "source": "https://github.com/phpnomad/loader/tree/1.0.2"
+            },
+            "time": "2025-04-15T10:04:30+00:00"
         },
         {
             "name": "phpnomad/logger",
@@ -88,6 +260,89 @@
                 "source": "https://github.com/phpnomad/logger/tree/1.0.0"
             },
             "time": "2024-12-18T17:18:00+00:00"
+        },
+        {
+            "name": "phpnomad/mutator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnomad/mutator.git",
+                "reference": "04aea2dc50fa71a4e2e0c10efe7b38991d4c3d5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnomad/mutator/zipball/04aea2dc50fa71a4e2e0c10efe7b38991d4c3d5f",
+                "reference": "04aea2dc50fa71a4e2e0c10efe7b38991d4c3d5f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpnomad/tests": "^0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPNomad\\Mutator\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Standiford",
+                    "email": "alex@standiford.us"
+                }
+            ],
+            "homepage": "https://github.com/phoenix/core",
+            "support": {
+                "issues": "https://github.com/phpnomad/mutator/issues",
+                "source": "https://github.com/phpnomad/mutator/tree/1.0.0"
+            },
+            "time": "2024-12-18T17:18:31+00:00"
+        },
+        {
+            "name": "phpnomad/update",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnomad/update.git",
+                "reference": "5f9921daa3c95074ba2f60b78856bb3d65a39c85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnomad/update/zipball/5f9921daa3c95074ba2f60b78856bb3d65a39c85",
+                "reference": "5f9921daa3c95074ba2f60b78856bb3d65a39c85",
+                "shasum": ""
+            },
+            "require": {
+                "phpnomad/event": "^1.0"
+            },
+            "require-dev": {
+                "phpnomad/tests": "^0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPNomad\\Update\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Standiford",
+                    "email": "alex@standiford.us"
+                }
+            ],
+            "homepage": "https://github.com/phpnomad/update",
+            "support": {
+                "issues": "https://github.com/phpnomad/update/issues",
+                "source": "https://github.com/phpnomad/update/tree/1.0.0"
+            },
+            "time": "2024-12-18T17:29:08+00:00"
         },
         {
             "name": "phpnomad/utils",
