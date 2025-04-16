@@ -10,12 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Phoenix\\Core\\": "lib/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Phoenix\\Core\\Tests\\": "tests/"
+            "PHPNomad\\Symfony\\Component\\Console\\": "lib/"
         }
     },
     "authors": [
@@ -24,12 +19,15 @@
             "email": "alex@standiford.us"
         }
     ],
-    "require-dev": {
-        "phpnomad/tests": "^0.1.0 || ^0.3.0"
-    },
     "config": {
         "allow-plugins": {
             "phpstan/extension-installer": true
         }
+    },
+    "require": {
+        "symfony/console": "^7.2",
+        "phpnomad/console": "^1.0",
+        "phpnomad/logger": "^1.0",
+        "phpnomad/utils": "^1.0"
     }
 }
