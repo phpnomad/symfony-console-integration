@@ -20,13 +20,8 @@ use PHPNomad\Utils\Helpers\Str;
 
 class ConsoleStrategy implements ConsoleStrategyInterface
 {
-    protected Application $app;
-    protected LoggerStrategy $logger;
-
-    public function __construct(LoggerStrategy $logger, ?Application $app = null)
+    public function __construct(protected LoggerStrategy $logger, protected Application $app)
     {
-        $this->app = $app ?: new Application();
-        $this->logger = $logger;
     }
 
     public function registerCommand(callable $commandGetter): void
