@@ -120,11 +120,17 @@ class ConsoleStrategy implements ConsoleStrategyInterface
             }
 
             if ($isOption) {
-                $name = Str::trimLeading($raw, '-');
+                // Remove leading "--"
+                $raw = ltrim($raw, '-');
 
-                if (Str::contains($name, '=')) {
-                    [$name, $default] = explode('=', $name, 2);
+                // Extract default value if present
+                if (Str::contains($raw, '=')) {
+                    [$name, $default] = explode('=', $raw, 2);
                     $required = $default === '';
+                } else {
+                    $name = $raw;
+                    $default = null;
+                    $required = true;
                 }
 
                 return [
@@ -135,6 +141,7 @@ class ConsoleStrategy implements ConsoleStrategyInterface
                     'description' => $description,
                 ];
             }
+
 
             $name = Str::trimTrailing($raw, '?');
             $optional = Str::endsWith($raw, '?');
