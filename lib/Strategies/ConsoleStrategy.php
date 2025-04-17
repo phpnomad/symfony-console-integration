@@ -35,13 +35,15 @@ class ConsoleStrategy implements ConsoleStrategyInterface
         $nomadCommand = $commandGetter();
         $parsed = $this->parseSignature($nomadCommand->getSignature());
 
-        $symfonyCommand = new class($nomadCommand, $parsed, $this->logger) extends SymfonyCommand {
+        $symfonyCommand = new class($this->outputStrategy, $nomadCommand, $parsed, $this->logger) extends SymfonyCommand  {
             protected NomadCommand $command;
             protected array $parsed;
             protected LoggerStrategy $logger;
+            protected OutputStrategy $outputStrategy;
 
-            public function __construct(NomadCommand $command, array $parsed, LoggerStrategy $logger)
+            public function __construct(OutputStrategy $outputStrategy, NomadCommand $command, array $parsed, LoggerStrategy $logger)
             {
+                $this->outputStrategy = $outputStrategy;
                 $this->command = $command;
                 $this->parsed = $parsed;
                 $this->logger = $logger;
