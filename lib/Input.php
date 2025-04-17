@@ -63,10 +63,4 @@ class Input implements \PHPNomad\Console\Interfaces\Input
         $this->overrides = $params;
         return $this;
     }
-
-    public function setOutput(mixed $output): static
-    {
-        $this->output = $output;
-        return $this;
-    }
 }
