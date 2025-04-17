@@ -51,8 +51,12 @@ class Input implements \PHPNomad\Console\Interfaces\Input
 
     public function getParams(): array
     {
+        $args = $this->input->getArguments();
+
+        unset($args['command']); // Remove the Symfony-added 'command' argument
+
         return array_merge(
-            $this->input->getArguments(),
+            $args,
             $this->input->getOptions(),
             $this->overrides
         );
