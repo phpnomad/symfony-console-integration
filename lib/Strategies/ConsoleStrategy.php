@@ -2,6 +2,8 @@
 
 namespace PHPNomad\Symfony\Component\Console\Strategies;
 
+use PHPNomad\Console\Interfaces\Input;
+use PHPNomad\Console\Interfaces\OutputStrategy;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface as SymfonyInput;
@@ -20,7 +22,11 @@ use PHPNomad\Utils\Helpers\Str;
 
 class ConsoleStrategy implements ConsoleStrategyInterface
 {
-    public function __construct(protected LoggerStrategy $logger, protected Application $app)
+    public function __construct(
+        protected LoggerStrategy $logger,
+        protected Application $app,
+        protected OutputStrategy $outputStrategy
+    )
     {
     }
 
@@ -66,7 +72,6 @@ class ConsoleStrategy implements ConsoleStrategyInterface
             protected function execute(SymfonyInput $input, SymfonyOutput $output): int
             {
                 $nomadInput = new NomadInput($input);
-                $nomadOutput = new ConsoleOutputStrategy($output);
 
                 try {
                     if ($this->command instanceof HasMiddleware) {
@@ -75,7 +80,7 @@ class ConsoleStrategy implements ConsoleStrategyInterface
                         }
                     }
 
-                    $exitCode = $this->command->handle($nomadInput->setOutput($nomadOutput));
+                    $exitCode = $this->command->handle($nomadInput);
 
                     if ($this->command instanceof HasInterceptors) {
                         foreach ($this->command->getInterceptors($nomadInput) as $interceptor) {
@@ -86,7 +91,7 @@ class ConsoleStrategy implements ConsoleStrategyInterface
                     return $exitCode;
                 } catch (ConsoleException $e) {
                     $this->logger->logException($e);
-                    $nomadOutput->error($e->getMessage());
+                    $this->outputStrategy->error($e->getMessage());
                     return 1;
                 }
             }
