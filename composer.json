@@ -29,6 +29,6 @@
         "phpnomad/console": "^1.0",
         "phpnomad/logger": "^1.0",
         "phpnomad/utils": "^1.0",
-        "phpnomad/loader": "^1.0"
+        "phpnomad/loader": "^1.0 || ^2.0"
     }
 }
