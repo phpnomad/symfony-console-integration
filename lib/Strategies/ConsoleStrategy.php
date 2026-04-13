@@ -32,34 +32,47 @@ class ConsoleStrategy implements ConsoleStrategyInterface
 
     public function registerCommand(callable $commandGetter): void
     {
+        // Parse signature eagerly (required for Symfony registration),
+        // but defer command instantiation to execute() time.
         $nomadCommand = $commandGetter();
         $parsed = $this->parseSignature($nomadCommand->getSignature());
+        $description = $nomadCommand->getDescription();
 
-        $symfonyCommand = new class($this->outputStrategy, $nomadCommand, $parsed, $this->logger) extends SymfonyCommand  {
-            protected NomadCommand $command;
+        $symfonyCommand = new class($this->outputStrategy, $commandGetter, $parsed, $description, $this->logger) extends SymfonyCommand {
+            /** @var callable */
+            protected $commandGetter;
             protected array $parsed;
             protected LoggerStrategy $logger;
             protected OutputStrategy $outputStrategy;
 
-            public function __construct(OutputStrategy $outputStrategy, NomadCommand $command, array $parsed, LoggerStrategy $logger)
+            public function __construct(OutputStrategy $outputStrategy, callable $commandGetter, array $parsed, string $description, LoggerStrategy $logger)
             {
                 $this->outputStrategy = $outputStrategy;
-                $this->command = $command;
+                $this->commandGetter = $commandGetter;
                 $this->parsed = $parsed;
                 $this->logger = $logger;
 
                 parent::__construct($parsed['name']);
-                $this->setDescription($command->getDescription());
+                $this->setDescription($description);
 
                 foreach ($parsed['definitions'] as $def) {
                     if ($def['isOption']) {
-                        $this->addOption(
-                            $def['name'],
-                            null,
-                            $def['required'] ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL,
-                            $def['description'],
-                            $def['default']
-                        );
+                        if ($def['isFlag'] ?? false) {
+                            $this->addOption(
+                                $def['name'],
+                                null,
+                                InputOption::VALUE_NONE,
+                                $def['description']
+                            );
+                        } else {
+                            $this->addOption(
+                                $def['name'],
+                                null,
+                                $def['required'] ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL,
+                                $def['description'],
+                                $def['default']
+                            );
+                        }
                     } else {
                         $this->addArgument(
                             $def['name'],
@@ -73,19 +86,20 @@ class ConsoleStrategy implements ConsoleStrategyInterface
 
             protected function execute(SymfonyInput $input, SymfonyOutput $output): int
             {
+                $command = ($this->commandGetter)();
                 $nomadInput = new NomadInput($input);
 
                 try {
-                    if ($this->command instanceof HasMiddleware) {
-                        foreach ($this->command->getMiddleware($nomadInput) as $middleware) {
+                    if ($command instanceof HasMiddleware) {
+                        foreach ($command->getMiddleware($nomadInput) as $middleware) {
                             $middleware->process($nomadInput);
                         }
                     }
 
-                    $exitCode = $this->command->handle($nomadInput);
+                    $exitCode = $command->handle($nomadInput);
 
-                    if ($this->command instanceof HasInterceptors) {
-                        foreach ($this->command->getInterceptors($nomadInput) as $interceptor) {
+                    if ($command instanceof HasInterceptors) {
+                        foreach ($command->getInterceptors($nomadInput) as $interceptor) {
                             $interceptor->process($nomadInput, $exitCode);
                         }
                     }
@@ -127,28 +141,35 @@ class ConsoleStrategy implements ConsoleStrategyInterface
             }
 
             if ($isOption) {
-                // Remove leading "--"
                 $raw = ltrim($raw, '-');
 
-                // Extract default value if present
                 if (Str::contains($raw, '=')) {
                     [$name, $default] = explode('=', $raw, 2);
-                    $required = $default === '';
+                    $required = false;
                 } else {
                     $name = $raw;
                     $default = null;
-                    $required = true;
+                    $required = false;
+
+                    return [
+                        'name' => $name,
+                        'isOption' => true,
+                        'isFlag' => true,
+                        'required' => false,
+                        'default' => null,
+                        'description' => $description,
+                    ];
                 }
 
                 return [
                     'name' => $name,
                     'isOption' => true,
+                    'isFlag' => false,
                     'required' => $required,
                     'default' => $default,
                     'description' => $description,
                 ];
             }
-
 
             $name = Str::trimTrailing($raw, '?');
             $optional = Str::endsWith($raw, '?');
@@ -157,6 +178,7 @@ class ConsoleStrategy implements ConsoleStrategyInterface
             return [
                 'name' => $name,
                 'isOption' => false,
+                'isFlag' => false,
                 'required' => $required,
                 'default' => null,
                 'description' => $description,
