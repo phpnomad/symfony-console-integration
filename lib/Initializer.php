@@ -28,7 +28,11 @@ class Initializer implements HasClassDefinitions, Loadable, CanSetContainer
 
     public function load(): void
     {
-        $this->container->bindSingletonFromFactory(
+        // phpnomad/di-container's HasBindings interface exposes bindFactory,
+        // not bindSingletonFromFactory (which doesn't exist on any released
+        // version of di-container). Behavior is equivalent: factory is invoked
+        // on first resolution and the instance is cached.
+        $this->container->bindFactory(
             OutputInterface::class,
             fn() => new ConsoleOutput(OutputInterface::VERBOSITY_NORMAL, null, new OutputFormatter())
         );
